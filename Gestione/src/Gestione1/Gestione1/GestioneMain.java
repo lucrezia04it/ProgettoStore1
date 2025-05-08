@@ -37,7 +37,6 @@ public class GestioneMain {
 				while ((riga = letturaUtenti.readLine()) != null) {
 					Utente utente = new Utente(riga);
 					utenti.add(utente);
-					System.out.println("Utente caricato: " + utente.toString());
 				}
 
 				letturaUtenti.close();
@@ -193,12 +192,12 @@ public class GestioneMain {
 					System.out.println("Id non valido.");
 					break;
 				}
+
 				Prodotto prodotto = prodotti.get(idProdotto - 1);
 				if(prodotto != null) {
 					System.out.println("Inserire nuovo prezzo");
 					prodotto.setPrezzo(scanner.nextDouble());
 
-					//Modifica della singola riga nel file prodotti.txt
 					try (FileWriter fileWriter = new FileWriter(nomeFileProdotti)) {
 						for(var prod: prodotti) {
 							fileWriter.write(prod.toString());
@@ -206,9 +205,60 @@ public class GestioneMain {
 					} catch(Exception e) {
 						e.printStackTrace();
 					}
+					System.out.println("Prodotto modificato con successo!");
 				}else {
 					System.out.println("Nessun prodotto trovato per l'id " + idProdotto);
 				}
+				break;
+
+			case 6: //Rimozione del prodotto
+				System.out.println("Inserisci l'id del prodotto da rimuovere");
+				int idDaRimuovere = scanner.nextInt();
+				if(idDaRimuovere <= 0 || idDaRimuovere > prodotti.size()) {
+					System.out.println("Id non valido.");
+					break;
+				}
+				var prodottoDaRimuovere = prodotti.get(idDaRimuovere - 1);
+				if(prodottoDaRimuovere != null) {
+					prodotti.remove(idDaRimuovere-1);
+					try (FileWriter fileWriter = new FileWriter(nomeFileProdotti)) {
+						for(var prod: prodotti) {
+							fileWriter.write(prod.toString());
+						}
+					} catch(Exception e) {
+						e.printStackTrace();
+					}
+					System.out.println("il prodotto " + prodottoDaRimuovere.getId() + "-" + prodottoDaRimuovere.getNome() + " è stato rimosso con successo" );
+				}else {
+					System.out.println("Nessun prodotto trovato per l'id " + idDaRimuovere);
+				}
+
+				break;
+
+			case 7: //Rimozione del prodotto
+				Prodotto nuovoProdotto = new Prodotto();
+				if (prodotti.isEmpty()) {
+					nuovoProdotto.setId(1);
+				} else {
+					nuovoProdotto.setId(prodotti.get(prodotti.size() - 1).getId() + 1);
+				}
+
+				System.out.println("Nome del prodotto:");
+				nuovoProdotto.setNome(scanner.nextLine());
+
+				System.out.println("Prezzo:");
+				nuovoProdotto.setPrezzo(scanner.nextDouble());
+
+				prodotti.add(nuovoProdotto);
+				try (FileWriter fileWriter = new FileWriter(nomeFileProdotti)) {
+					for(var prod: prodotti) {
+						fileWriter.write(prod.toString());
+					}
+					System.out.println("Prodotto" + nuovoProdotto.getId() + "-" + nuovoProdotto.getNome() + " aggiunto con successo!");
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
+
 				break;
 			}
 

@@ -1,0 +1,2 @@
+Smartphone,850.0
+Televisore 55 pollici,1500.0

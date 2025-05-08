@@ -78,31 +78,33 @@ public class GestioneUtente {
 
 		}
 
-		//Classe utlizzata per la gestione di un utente atenticato 	
-		public static class UtenteAutenticato extends Utente {
-			public UtenteAutenticato(Utente utente)
+
+	}
+
+	//Classe utlizzata per la gestione di un utente atenticato 	
+	public static class UtenteAutenticato extends Utente {
+		public UtenteAutenticato(Utente utente)
+		{
+			if(utente != null)
 			{
-				if(utente != null)
-				{
-					this.setId(utente.getId());
-					this.setNome(utente.getNome());
-					this.setCognome(utente.getCognome());
-					this.setMail(utente.getMail());	
-				}
+				this.setId(utente.getId());
+				this.setNome(utente.getNome());
+				this.setCognome(utente.getCognome());
+				this.setMail(utente.getMail());	
 			}
+		}
 
-			public UtenteAutenticato() {
-				this.setId(0);
-			}
+		public UtenteAutenticato() {
+			this.setId(0);
+		}
 
-			public Boolean isAuthenticated() {
-				return this.getId() != 0;
-			}; //se ha l'id è autenticato
+		public Boolean isAuthenticated() {
+			return this.getId() != 0;
+		}; //se ha l'id è autenticato
 
 
-			public Boolean isAdmin() {
-				return this.isAuthenticated() && this.getMail().equals("lucrelongo400@gmail.com");
-			}
+		public Boolean isAdmin() {
+			return this.isAuthenticated() && this.getMail().equals("lucrelongo400@gmail.com");
 		}
 	}
 }

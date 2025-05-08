@@ -13,7 +13,7 @@ public class GestioneProdotto{
 		public void setId(int id) {
 			this.id = id;
 		};
-		
+
 		public String getNome() {
 			return nome;
 		}
@@ -30,16 +30,17 @@ public class GestioneProdotto{
 			this.prezzo = prezzo;
 		}
 
+		public Prodotto() {}
+
 		public Prodotto(String linea) {		
 			String[] ElencoProdotti = linea.split(",");
 
 			this.nome = ElencoProdotti[0];
-			this.prezzo = Double.valueOf(ElencoProdotti[1]);
+			this.prezzo =   Double.valueOf(ElencoProdotti[1]);
 		}
 
 		public String toString() {
 			return nome + "," + prezzo + "\n";
 		}
-
 	}
 }
