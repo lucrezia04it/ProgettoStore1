@@ -1,18 +1,14 @@
 package Gestione1;
 
 public class GestioneUtente {
-
 	public static class Utente {
-		
+
 		private Integer id;
 		private String nome;
 		private String cognome;
 		private String mail;
-		
-		public Integer getId() {
-			return id;
-		}
 
+		public Integer getId() { return id;	}
 		public void setId(Integer id) {
 			this.id = id;
 		}
@@ -59,19 +55,19 @@ public class GestioneUtente {
 
 		private String indirizzo;
 		private String password;
-		
+
 		//Metodo utilizzato per la serializzazione dell'oggetto, in maniera da salvarlo all'interno del file "utenti.txt"
 		public String toString() {
-			return id + "," + nome + "," + cognome + "," + mail + "," + indirizzo + "," + password;
+			return id + "," + nome + "," + cognome + "," + mail + "," + indirizzo + "," + password + "\n";
 		}
-		
+
 		//Costruttore vuoto per l'inizializzazione di Utente
 		public Utente() {}
-		
+
 		//Costruttore che riceve in input una riga del file "utenti.txt" che viene deserializzata 
 		public Utente(String rigaFile) {	
 			String[] DatiUtente = rigaFile.split(",");
-			
+
 			Integer id = Integer.valueOf(DatiUtente[0]);
 			this.id = id;
 			this.nome = DatiUtente[1];
@@ -79,37 +75,35 @@ public class GestioneUtente {
 			this.mail = DatiUtente[3];
 			this.indirizzo = DatiUtente[4];
 			this.password = DatiUtente[5];
-			
+
 		}
-	
-	//Classe utlizzata per la gestione di un utente atenticato 	
-	public static class UtenteAutenticato extends Utente {
-		public UtenteAutenticato(Utente utente)
-		{
-			if(utente != null)
+
+		//Classe utlizzata per la gestione di un utente atenticato 	
+		public static class UtenteAutenticato extends Utente {
+			public UtenteAutenticato(Utente utente)
 			{
-				this.setId(utente.getId());
-				this.setMail(utente.getMail());	
+				if(utente != null)
+				{
+					this.setId(utente.getId());
+					this.setNome(utente.getNome());
+					this.setCognome(utente.getCognome());
+					this.setMail(utente.getMail());	
+				}
+			}
+
+			public UtenteAutenticato() {
+				this.setId(0);
+			}
+
+			public Boolean isAuthenticated() {
+				return this.getId() != 0;
+			}; //se ha l'id è autenticato
+
+
+			public Boolean isAdmin() {
+				return this.isAuthenticated() && this.getMail().equals("lucrelongo400@gmail.com");
 			}
 		}
-		
-		public UtenteAutenticato() {
-			this.setId(0);
-		}
-	
-		public Boolean isAuthenticated() {
-			return this.getId() != 0;
-		}; //se ha l'id è autenticato
-	
-	
-		public Boolean isAdmin() {
-			return this.isAuthenticated() && this.getMail().equals("lucrelongo400@gmail.com");
-		};
-	
-	
 	}
-
-
-	
 }
 
